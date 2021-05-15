@@ -29,19 +29,54 @@ app.post("/place", (request, response) => {
         );
 });
 
-//retrieves the list of all the places from the database
-app.get("/places", (request, response) => {
-    response.json("Hello world!");
-});
-
 //adds a review to the place whose name is equal to the 'placeName' parameter.
 app.post("/review/:placeName", (request, response) => {
-    response.send(`The review was added successfully.`);
+    let placeName = request.query.placeName;
+    let comment = request.body.comment;
+    let rating = request.body.rating;
+    let placeid = db.getIdByName(placeName);
+
+    db.saveReview(comment, rating, placeid)
+        .then(() =>
+            response.send(`The review for ${placeName} was added successfully.`)
+        )
+        .catch((e) =>
+            response.status(500).send("There was an error in saving the place")
+        );
+});
+
+//retrieves the list of all the places from the database
+app.get("/places", (request, response) => {
+    db.getPlaces()
+        .then((places) => response.json(places))
+        .catch((e) => {
+            console.log(e);
+            response
+                .status(500)
+                .send("There was an error in finding the places.");
+        });
 });
 
 //returning the result of the search query.
-app.get("/search/:placeName/:location", (request, response) => {
-    response.send("Search");
-});
+app.get(
+    "/search/:placeName?/:street?/:city?/:state?/:postalcode?",
+    (request, response) => {
+        let placeName = request.query.placeName;
+        let street = request.query.street;
+        let city = request.query.city;
+        let state = request.query.state;
+        let postalcode = request.query.postalcode;
+        console.log(`name: ${placeName} - ${typeof placeName}`);
+        console.log(`street: ${street} - ${typeof street}`);
+        db.findPlaces(placeName, street, city, state, postalcode)
+            .then((places) => response.json(places))
+            .catch((e) => {
+                console.log(e);
+                response
+                    .status(500)
+                    .send("There was an error in finding the places.");
+            });
+    }
+);
 
 app.listen(port, () => console.log("Listening on port " + port));
