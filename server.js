@@ -29,13 +29,13 @@ app.post("/place", (request, response) => {
         );
 });
 
-// //adds a review to the place whose name is equal to the 'placeName' parameter.
+//adds a review to the place whose name is equal to the 'placeName' parameter.
 // app.post("/review/:placeName", (request, response) => {
-//     let placeName = request.query.placeName;
+//     let placeName = request.params.placeName;
 //     let comment = request.body.comment;
 //     let rating = request.body.rating;
-//     let placeid = db.getIdByName(placeName);
-
+//     let placeid = request.body.placeid;
+//     console.log(placeid);
 //     db.saveReview(comment, rating, placeid)
 //         .then(() =>
 //             response.send(`The review for ${placeName} was added successfully.`)

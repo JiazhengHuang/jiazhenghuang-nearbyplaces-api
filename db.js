@@ -32,7 +32,7 @@ let getPlaces = () => {
 
 let getIdByName = (placeName) => {
     return pool
-        .query("select id from mynearbyplaces.place where name=%$1%", [
+        .query("select id from mynearbyplaces.place where like %$1%", [
             placeName,
         ])
         .then((result) => {
