@@ -29,21 +29,21 @@ app.post("/place", (request, response) => {
         );
 });
 
-//adds a review to the place whose name is equal to the 'placeName' parameter.
-app.post("/review/:placeName", (request, response) => {
-    let placeName = request.query.placeName;
-    let comment = request.body.comment;
-    let rating = request.body.rating;
-    let placeid = db.getIdByName(placeName);
+// //adds a review to the place whose name is equal to the 'placeName' parameter.
+// app.post("/review/:placeName", (request, response) => {
+//     let placeName = request.query.placeName;
+//     let comment = request.body.comment;
+//     let rating = request.body.rating;
+//     let placeid = db.getIdByName(placeName);
 
-    db.saveReview(comment, rating, placeid)
-        .then(() =>
-            response.send(`The review for ${placeName} was added successfully.`)
-        )
-        .catch((e) =>
-            response.status(500).send("There was an error in saving the place")
-        );
-});
+//     db.saveReview(comment, rating, placeid)
+//         .then(() =>
+//             response.send(`The review for ${placeName} was added successfully.`)
+//         )
+//         .catch((e) =>
+//             response.status(500).send("There was an error in saving the place")
+//         );
+// });
 
 //retrieves the list of all the places from the database
 app.get("/places", (request, response) => {
