@@ -45,7 +45,7 @@ app.post("/place", (request, response) => {
 //         );
 // });
 
-//retrieves the list of all the places from the database
+//retrieves the list of all the places from the  database
 app.get("/places", (request, response) => {
     db.getPlaces()
         .then((places) => response.json(places))
