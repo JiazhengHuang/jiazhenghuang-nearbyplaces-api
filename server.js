@@ -13,7 +13,7 @@ const port = process.env.PORT || 4002;
 app.use(express.json());
 app.use(cors());
 
-//saves a new place into the database on the server.
+//saves a new place  into the database on the server.
 app.post("/place", (request, response) => {
     let name = request.body.name;
     let street = request.body.street;
