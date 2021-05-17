@@ -70,16 +70,16 @@ let saveReview = (comment, rating, placeid) => {
         .then(() => console.log("the review was saved"));
 };
 
-let findPlaces = (name, street, city, state, postalcode) => {
+let findPlaces = (placeName, street, city, state, postalcode) => {
     let sql = `select p.name, a.street, a.city, a.state, a.postalcode,
     json_agg(json_build_object('comment', r.comment, 'rating', r.rating)) as reviews
     from mynearbyplaces.place p
     inner join mynearbyplaces.address a on p.addressid = a.id
     left join mynearbyplaces.review r on p.id = r.placeid
     where 
-    (p.name like '${!name ? "%%" : `%${name}%`}') and (a.street like '${
-        !street ? "%%" : `%${street}%`
-    }')
+    (p.name like '${
+        !placeName ? "%%" : `%${placeName}%`
+    }') and (a.street like '${!street ? "%%" : `%${street}%`}')
     and (a.city like '${!city ? "%%" : `%${city}%`}') and (a.state like '${
         !state ? "%%" : `%${state}%`
     }') 

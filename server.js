@@ -24,9 +24,10 @@ app.post("/place", (request, response) => {
     db.saveAddress(street, city, state, postalcode)
         .then((addressid) => db.savePlace(name, addressid))
         .then(() => response.send(`The place ${name} was added successfully.`))
-        .catch((e) =>
-            response.status(500).send("There was an error in saving the place")
-        );
+        .catch((e) => {
+            console.log(e);
+            response.status(500).send("There was an error in saving the place");
+        });
 });
 
 //adds a review to the place whose name is equal to the 'placeName' parameter.
